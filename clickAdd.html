@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>点击增加</title>
+  <style>
+    * {
+      margin:0;
+      padding:0;  
+    }
+    li {
+      list-style:none;
+    }
+    a {
+     text-decoration:none;
+    }
+    .clearfix:after {
+      content:'';
+      display:block;
+      clear:both;
+    }
+    .ct {
+      width: 800px;
+      margin: 0 auto;
+    }
+    .ct h1 {
+      padding: 10px 0;
+    }
+
+    .panel {
+       width: 646px;
+      overflow:hidden;
+      display:none;
+    }
+    .show {
+      display:block;
+    }
+    .content {
+      margin-top:-10px;
+      margin-left:-20px;
+    }
+    .content>li {
+      padding:5px 0;
+      margin-left:20px;
+      margin-top:10px;
+      width: 200px;
+      border:1px solid #ccc;
+      float:left;
+     position:relative;
+      text-align:center;
+    }
+    .content p {
+      font-size:12px;
+      text-align:left;
+      padding:10px 10px;
+    }
+    .content .price {
+      color:#c81623;
+      padding:0px 10px;
+      text-align:left;
+    }
+    .content .cover {
+      background-color: rgba(0,0,0,0.3);
+      position:absolute;
+      left:0;
+      right:0;
+      top:0;
+      bottom:0;
+      text-align:center;
+      opacity:0;
+      transition:all 0.5s;
+    }
+    .content .cover:hover {
+      opacity:1;
+    }
+    .cover a {
+      background-color: #fff;
+      color:#c81623;
+      position:absolute;
+      left:50%;
+      width: 80px;
+      border:1px solid red;
+      line-height: 30px;
+      border-radius:3px;
+      top:50%;
+      transform: translate(-50%,-50%);
+    }
+    .ct .btn {
+      margin-top: 20px;
+      display: inline-block;
+      border: 1px solid #c81623;
+      color: #c81623;
+      padding: 10px 15px;
+      border-radius: 3px;
+      text-align: center;
+      background: #fff;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+   <div class="ct">
+   <h1>首饰珠宝</h1>
+     <ul class="tab-content">
+    <li class="panel show">
+    <ul class="content clearfix">
+      <li class="prod">
+        <div class="cover">
+          <a href="">立即抢购</a>
+        </div>
+        <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg" alt="">
+        <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+        <div class="price">￥1699</div>
+      </li>
+      
+      <li>
+        <div class="cover">
+          <a href="">立即抢购</a>
+        </div>
+        <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg" alt="">
+        <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+        <div class="price">￥1699</div>
+      </li>
+      
+      <li>
+        <div class="cover">
+          <a href="">立即抢购</a>
+        </div>
+        <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg" alt="">
+        <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+        <div class="price">￥1699</div>
+      </li>
+      
+      <li>
+        <div class="cover">
+          <a href="">立即抢购</a>
+        </div>
+        <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg" alt="">
+        <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+        <div class="price">￥1699</div>
+      </li>
+      
+      <li>
+        <div class="cover">
+          <a href="">立即抢购</a>
+        </div>
+        <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg" alt="">
+        <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+        <div class="price">￥1699</div>
+      </li>
+      
+      <li>
+        <div class="cover">
+          <a href="">立即抢购</a>
+        </div>
+        <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg" alt="">
+        <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+        <div class="price">￥1699</div>
+      </li>
+    </ul>
+    </li>
+  </ul>
+
+   <a href="" class="btn">添加</a>
+   </div>
+ 
+
+
+  
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script>
+  var products = [
+    {
+      img: 'http://img10.360buyimg.com/N3/jfs/t2242/92/1446546284/374195/9196ac66/56af0958N1a723458.jpg',
+      name: '珂兰 黄金手 猴哥款',
+      price: '￥405.00'
+    },{
+      img: 'http://img10.360buyimg.com/N3/jfs/t2242/92/1446546284/374195/9196ac66/56af0958N1a723458.jpg',
+      name: '珂兰 黄金转运珠 猴哥款',
+      price: '￥100.00'
+    },{
+      img: 'http://img10.360buyimg.com/N3/jfs/t2242/92/1446546284/374195/9196ac66/56af0958N1a723458.jpg',
+      name: '珂兰 黄金手链 3D猴哥款',
+      price: '￥45.00'
+    }
+  ];
+
+   // var $cloneLi = $('.prod').clone();
+   // $('.btn').on('click',function(e){
+   //    e.preventDefault();
+   //    for (var i=0; i<3; i++) {
+   //      $cloneLi.find('img').attr('src',products[i]['img']);
+   //      $cloneLi.find('p').text(products[i]['name']);
+   //      $cloneLi.find('.price').text(products[i]['price']);
+   //      $('.content').append($cloneLi.clone()); 
+   //    }
+   // })
+   // 
+
+ //这种方式是字符串拼接，在点击的时候调用返回html元素，然后再将创建的对象append到页面上
+  function createLi(prod) {
+    var html = '';
+    html += '<li>';
+    html +=   '<div class="cover">';
+    html +=       '<a href="">立即抢购</a>';
+    html +=   '</div>';
+    html +=   '<img src='+ prod['img'] +' alt="">';
+    html +='<p>' + prod['name'] +'</p>';
+    html +='<div class="price">' + prod['price'] + '</div>';
+    html +='</li>';
+    return html;
+  }
+  $('.btn').on('click',function(e) {
+    e.preventDefault();
+    // for(var i=0; i<3; i++) {
+    //   $(createLi(i)).appendTo('.content');
+    // }
+
+      $.each(products,function(index,prod){
+    //用each方法是遍历第一个参数对象
+    //function中的第一个参数是products中每个对象的索引值，prod对应每一个对象
+    $('.content').append(createLi(prod))
+  })
+  })
+
+
+  </script>
+</body>
+</html>

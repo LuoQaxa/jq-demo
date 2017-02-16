@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>渐变轮播</title>
+	<style>
+		html,body,ul,li,p{
+			margin: 0;
+			padding: 0;
+		}
+		a {
+			text-decoration: none;
+		}
+		.carousel {
+			width: 310px;
+			height: 206px;
+			position: relative;
+			overflow: hidden;
+		}
+		.carousel .img-ct {
+			position: absolute;
+			left: -310px;
+		}
+		.carousel .img-ct img{
+			width: 310px;
+			height: 206px;
+		}
+		.carousel .img-ct li {
+			float: left;
+		}
+		.carousel .img-ct:after{
+				content: ' ';
+				display: block;
+				clear: both;
+		}
+		.arrow {
+			position: absolute;
+			position: absolute;
+		    top: 50%;
+		    margin-top: -15px;
+		    width: 30px;
+		    height: 30px;
+		    line-height: 30px;
+		    text-align: center;
+		    background: #4E443C;
+		    color: #fff;
+		    border-radius: 30px;
+		    box-shadow: 0 0 2px #999;
+		    opacity: 0.8
+		}
+		.arrow:hover {
+			opacity: 1;
+		}
+		.pre {
+			left: 10px;
+		}
+		.next {
+			right: 10px;
+		}
+		ul.bullet {
+			/*第一种方式是利用transform:translate(-50%);*/
+			/*第二种方式用text-center,在.bullet外再套一个盒子*/
+		}
+		div.bullet-ct {
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 20px;
+			text-align: center;
+		}
+		ul.bullet li{
+		display: inline-block;
+		width: 15px;
+		height: 5px;
+		border-radius: 2px;
+		background-color: #ccc;
+		cursor: pointer;
+		}
+		ul.bullet li.active{
+		background-color: #666;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="carousel">
+		<ul class="img-ct">
+			<li data-index=0><a href=""><img src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg"></a></li>
+			<li data-index=1><a href=""><img src="http://cdn.jirengu.com/book.jirengu.com/img/10.jpg"></a></li>
+			<li data-index=2><a href=""><img src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg"></a></li>
+			<li data-index=3><a href=""><img src="http://cdn.jirengu.com/book.jirengu.com/img/1.jpg"></a></li>
+		</ul>
+		<a href="" class="pre arrow"><</a>
+		<a href="" class="next arrow">></a>
+		<div class="bullet-ct">
+			<ul class="bullet">
+				<li class="active"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+		
+
+	</div>
+	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+	<script>
+			
+				
+				var $imgCt = $('.img-ct'),
+					$firstImg = $imgCt.children().first().clone(),
+					$lastImg = $imgCt.children().last().clone(),		
+					oldLength = $imgCt.children().length,
+					curpage = 0;
+
+				var lock = false,
+					timer = null;
+
+			//1、首先做初始化操作即图片添加，并且设置最初的图片位置，这样封装到一个函数里面spliceImg()
+				function spliceImg($first,$last,$imgCt,len){
+					$imgCt.prepend($last);
+					$imgCt.append($first);
+					$imgCt.width($first.width() * (len+2));
+					$imgCt.css('left','-'+$first.width())
+				}
+
+				spliceImg($firstImg,$lastImg,$imgCt,oldLength);
+		
+				 autoPlay();
+			//2、做运动函数包括了playNext(n) playPre(n)，传入的参数n表示需要移动的图片的张数
+			//如果是渐变的效果，就是tarInd图片fadeIn，然后curpagefadeOut
+			function playNext(n){
+				// stopPlay();
+				if (lock) {
+					return
+				}
+				lock = true;
+				var n = n || 1;
+				
+				$imgCt.children().eq(curpage + 1).fadeOut(500);
+				$imgCt.children().eq(curpage+1+n).fadeIn(500,function(){
+					curpage = curpage + n;
+					if (curpage == oldLength ) {
+						$imgCt.css('left','-'+$firstImg.width()+'px');
+						curpage = 0;
+					}
+					setBullet();
+					lock = false;
+				});
+			}
+			function playPrev(n){
+				if (lock) {
+					return
+				}
+				lock = true;
+				var n = n || 1;
+				$imgCt.animate({
+					left:'+='+$firstImg.width() * n
+					},function(){
+						curpage = curpage - n;
+						if (curpage < 0 ) {
+							$imgCt.css('left','-'+$firstImg.width() * oldLength +'px');
+							curpage = oldLength - 1;
+						}
+						setBullet();
+						lock = false;
+				})
+				
+			}
+
+
+			//3、setBullet函数，这个函数控制了bullet的同步。
+			function setBullet(){
+				$('.bullet').children().removeClass('active');
+				$('.bullet').children().eq(curpage).addClass('active');
+			}
+
+			//4、对左右按钮绑定事件
+			$('.arrow').on('click',function(e){
+				stopPlay();
+				e.preventDefault();
+				if ($(this).hasClass('next')) {
+					playNext();
+				}else if ($(this).hasClass('pre')) {
+					playPrev();
+				}
+				
+				autoPlay();
+			})
+
+			//5、对所有的bullet绑定事件
+			$('.bullet li').on('click',function(){
+				stopPlay()
+				// console.log($(this).index());
+				var tarInd = $(this).index();
+				if (tarInd > curpage) {
+					playNext(tarInd-curpage);
+				}else if (tarInd < curpage) {
+					playPrev(curpage - tarInd);
+				}
+				autoPlay();
+			})
+
+		    //6、优化防止重复点击添加一个点击锁lock,只要动画一开始就上锁，直到动画完成才取消锁
+		    //7、添加自动播放的功能，并注意当用户点击时停止自动播放以免发生冲突
+		    function autoPlay(dir,time){
+		    	var dir = dir || 'next',
+		    		time = time || 2000;
+		    	if (dir == 'next') {
+		    		timer = setInterval(playNext,time);
+		    	}else if (dir = 'prev') {
+		    		timer = setInterval(playPrev,time);
+		    	}
+		    }
+
+		    function stopPlay(){
+		    	clearInterval(timer);
+		    }
+
+		   
+		    
+	</script>
+</body>
+</html>
+
+

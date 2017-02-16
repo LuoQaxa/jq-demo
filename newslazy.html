@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>新闻懒加载-ajax</title>
+	<style>
+	 	* {
+	 		margin: 0;
+	 		padding: 0;
+	 		list-style:none;
+	 		font-size: 14px;
+	 	}
+	 	a {
+	 		text-decoration: none;
+	 	}
+	 	.item:after {
+	 		content: '';
+	 		display: block;
+	 		clear: both;
+	 	}
+		.container {
+			margin: 0 auto;
+			margin-top: 20px;
+			width: 800px;
+			
+		}
+		.item img{
+			width: 50px;
+			height: 50px;
+		}
+		.item .img {
+			float: left;
+		}
+		.item h4 {
+			margin-left: 60px;
+			font-size: 14px;
+		}
+		.item p {
+			margin-left: 60px;
+			      font-size: 14px;
+			      margin-top: 10px;
+			      color: #ccc;
+		}
+		#more{
+			visibility: hidden;
+		}
+
+	</style>
+</head>
+<body>
+	<ul class="container">
+		
+	</ul>
+	<p id="more">加载更多</p>
+	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+	<script>
+
+		//滚动的时候才向后端获取数据
+		//在more可见时才加载数据
+		//老师的方法是设置一个pageindex的变量，而我是每次都检测前端的li的数量
+		var pageindex = 0;
+		//设置一个标记是否完成请求
+		var isover = false;
+		var lock = false;
+		getNews();
+		//由于没有滚动条，所以我们要想办法去解决这个问题，这个方法是
+		//当数据返回成功后做判断 p还能不能在页面上可见，如果可以见就又发起一次请求
+		//但是又出现一个问题，当最后没有数据之后，p就是一直可见的就会一直发送请求，这时候需要
+		//判断一下返回的数据是否为空，如果为空了停止发送请求
+		$(window).on('scroll',function(){
+			if (isVisible($('#more')) && !isover && !lock) {
+				getNews();
+				lock = true;
+			}
+		})
+		function getNews(){
+			$.ajax({
+				type:'get',
+				url:'/getnews2',
+				data:{
+					num:pageindex
+				},
+				success:function(result){
+					lock = false;
+					pageindex++;
+					appendHtml(result);
+					if (isVisible($('#more')) && !lock) {
+						getNews();
+					}
+					
+
+				},error:function(){
+					console.log('获取失败')
+				}
+			})
+		}
+		
+
+		function isVisible($node) {
+			var winHe = $(window).height();
+			var scrollTop = $(window).scrollTop();
+			var offsetTop = $node.offset().top;
+			var height = $node.innerHeight();
+			if ( (winHe + scrollTop ) > offsetTop && (scrollTop < offsetTop + height) ) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+
+
+		function appendHtml(result) {
+			if (result.length === 0) {
+			  $('.container').append('<p>没有更多数据了</p>');
+			  isover = true;
+			}else {
+				//遍历返回的数组
+				for (var i=0; i<result.length; i++) {
+					var html = '';
+					html +='<li class="item">';
+					html +='<a href="'+result[i]['link'] +'">';
+					html +='<div class="img">';
+					html +='<img src='+ result[i]['img'] + ' alt="">';
+					html +='</div>';
+					html +='<h4>'+result[i]['title']+'</h4>';
+					html +='<p>'+result[i]['brif']+'</p>';
+					html +='</a>';
+					$('.container').append(html);
+				}
+			}
+			
+
+		}
+	</script>
+</body>
+</html>

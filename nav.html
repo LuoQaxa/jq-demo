@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>侧边导航</title>
+  <style>
+  ul,li {
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+a {
+  text-decoration:none
+}
+.nav {
+  font-size:14px;
+}
+.nav-side {
+  width: 200px;
+  background-color: red;
+}
+.nav-side>li {
+  position:relative;
+}
+.nav-side>li>a {
+  margin:0 10px;
+  display:block;
+  padding:10px;
+  border-bottom:1px solid #999;
+  color:#333;
+}
+.sub-cate {
+  position:absolute;
+  left:200px;
+  display:none;
+  top:0;
+  width: 160px;
+  background-color: #fff;
+}
+.sub-cate>li{
+  margin:10px;
+ width: 60px;
+  float:left;
+  /* border:1px solid red; */
+}
+
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <ul class="nav-side">
+      <li class="category"><a href="">珠宝玉器</a>
+        <ul class="sub-cate">
+          <li><a href="">翡翠</a></li>
+          <li><a href="">玉石</a></li>
+          <li><a href="">宝石</a></li>
+          <li><a href="">水晶</a></li>
+          <li><a href="">玛瑙</a></li>
+          <li><a href="">钻石</a></li>
+        </ul>
+      </li>
+      <li class="category"><a href="">珠宝玉器</a>
+         <ul class="sub-cate">
+          <li><a href="">宝石</a></li>
+          <li><a href="">水晶</a></li>
+          <li><a href="">玛瑙</a></li>
+          <li><a href="">钻石</a></li>
+        </ul>
+      </li>
+      <li class="category"><a href="">珠宝玉器</a>
+         <ul class="sub-cate">
+          <li><a href="">宝石</a></li>
+          <li><a href="">水晶</a></li>
+        </ul>
+      </li>
+      <li class="category"><a href="">珠宝玉器</a>
+          <ul class="sub-cate">
+          <li><a href="">水晶</a></li>
+          <li><a href="">宝石</a></li>
+          <li><a href="">玛瑙</a></li>
+          <li><a href="">钻石</a></li>
+        </ul>
+      </li>
+      <li class="category"><a href="">珠宝玉器</a>
+
+          <ul class="sub-cate">
+          <li><a href="">玛瑙</a></li>
+          <li><a href="">钻石</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script>
+    
+    $('.category').on('mouseenter',function(){
+      $(this).find('.sub-cate').css('display','block');
+    })
+    $('.category').on('mouseleave',function(){
+      $(this).find('.sub-cate').css('display','none');
+    })
+  </script>
+</body>
+</html>

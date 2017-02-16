@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ajax jq点击加载</title>
+  <style>
+    ul,li {
+      margin:0;
+      padding: 0;
+      list-style: none;
+      text-align: center;
+    }
+    li {
+      line-height: 40px;
+      border: 1px solid #999;
+      margin-top: 10px;
+    }
+    li:hover {
+      background-color: green;
+      
+    }
+    #btn {
+      position: absolute;
+      width: 100px;
+      height: 40px;
+      border: 1px solid green;
+      border-radius: 5px;
+      text-align: center;;
+      line-height: 40px;
+      margin-top: 20px;
+      left: 50%;
+      margin-left: -50px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <ul id="news">
+    <li>内容1</li>
+    <li>内容2</li>
+    <li>内容3</li>
+  </ul>
+  <span id="btn">加载更多</span>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script>
+    //每次都传给后端是从哪一条数据开始处理
+ 
+    $('#btn').on('click',function(){
+      var num = $('#news').children().length;
+      console.log(num);
+      $.ajax({
+        url:'/getnews',
+        method:'get',
+        data:{
+          index:num
+        }
+      }).done(function(result){
+        dealdata(result);
+      }).fail(function(){
+        console.log('出错啦')
+      })
+    })
+    function dealdata(obj) {
+      for(var key in obj) {
+        var li ='<li>'+ obj[key] + '</li>';
+         $('#news').append(li);
+      }
+    }
+
+  </script>
+</body>
+</html>
