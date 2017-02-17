@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>waterfall</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+		}
+		/*只需要将图片都变成绝对定位就好了*/
+		.waterfall-ct {
+			margin: 0 auto;
+			position: relative;
+		}
+		.waterfall-ct li{
+			position: absolute;
+			transition: all 0.5s;
+            margin: 10px;
+            text-align: center;
+            color: #fff;
+		}
+
+		li img{
+			width: 185px;
+		}
+	</style>
+</head>
+<body>
+		<ul class="waterfall-ct">
+			<li><img src="https://unsplash.it/200/300?random" alt=""></li>
+			<li><img src="https://unsplash.it/200/400?random" alt=""></li>
+			<li><img src="https://unsplash.it/200/300?random" alt=""></li>
+			<li><img src="https://unsplash.it/200/500?random" alt=""></li>
+			<li><img src="https://unsplash.it/200/400?random" alt=""></li>
+			<li><img src="https://unsplash.it/200/250?random" alt=""></li>
+			<li><img src="https://unsplash.it/200/300?random" alt=""></li>
+			<li><img src="https://unsplash.it/200/400?random" alt=""></li>
+			<li><img src="https://unsplash.it/200/300?random" alt=""></li>
+			<li><img src="https://unsplash.it/200/500?random" alt=""></li>
+			<li><img src="https://unsplash.it/200/400?random" alt=""></li>
+			<li><img src="https://unsplash.it/200/250?random" alt=""></li>
+		</ul>
+	  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+	  <script>
+	  	$(window).on('load',function(){
+	  		render();
+	  	})
+	   		
+
+	   		function render(){
+	   			//1、初始化操作，要确定每一列排列多少张图片
+	   			var itemWidth = $('li').outerWidth(true);
+	   			var columns = parseInt($('.waterfall-ct').width() / itemWidth);
+	   			//2、创建一个保存每一列高度的数组，并且初始化每一项为0
+	   			var colHeight = [];
+	   			for (var i = 0; i<columns; i++){
+	   				colHeight.push(0);
+	   			}
+
+	   			//3、遍历每一个li对li进行定位
+	   			$('.waterfall-ct li').each(function(){
+	   				var minInd =0;
+	   				var minHeight = colHeight[0];
+	   				for (var i = 0; i<colHeight.length; i++){
+	   					if (minHeight > colHeight[i]) {
+	   						minHeight = colHeight[i];
+	   						minInd = i;
+	   					}
+	   				}
+	   				console.log(minInd);
+	   				$(this).css({
+	   					'left':minInd*itemWidth,
+	   					'top':minHeight});
+	   				colHeight[minInd] = $(this).outerHeight(true) + colHeight[minInd];
+	   			})
+	   		}
+	   	</script>
+</body>
+</html>
