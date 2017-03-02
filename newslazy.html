@@ -74,7 +74,7 @@
 			}
 		})
 		function getNews(){
-			$.ajax({
+			var a = $.ajax({
 				type:'get',
 				url:'/getnews2',
 				data:{
@@ -93,6 +93,7 @@
 					console.log('获取失败')
 				}
 			})
+			console.log(a);
 		}
 		
 

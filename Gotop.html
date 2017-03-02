@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Gotop</title>
+	<style>
+	 	.container {
+	 		height: 2000px;
+	 	}
+		.gotop {
+			position: fixed;
+			bottom: 100px;
+			right: 20px;
+		}
+	</style>
+</head>
+<body>
+	 <div class="container">
+		<button class="gotop">Back to top</button>
+	 </div>
+	 <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+	 <script>
+	 	// 1. `ct`属性，GoTop 对应的 DOM 元素的容器
+	 	// 2.  `target`属性， GoTop 对应的 DOM 元素
+	 	// 3.  `bindEvent` 方法， 用于绑定事件
+	 	// 4 `createNode` 方法， 用于在容器内创建节点
+	 	function GoTop($ct,$target){
+	 		this.$ct = $ct;
+	 		this.$target = $target;
+	 		GoTop.prototype.bindEvent = function(){
+	 			var $target = this.$target;
+	 			$(window).on('scroll',function(){
+	 				$target.show();
+	 				if ($(window).scrollTop() < 50) {
+	 					$target.hide();
+	 				}
+	 			})
+	 			$target.on('click',function(){
+	 				$(window).scrollTop(0);
+	 			})
+	 		}
+	 		GoTop.prototype.createNode = function(){
+	 			 this.$ct.append(this.$target);
+	 			 this.$target.hide();
+	 		}	 		
+	 		this.bindEvent();
+	 		this.createNode();
+	 	}
+
+	 	var top = new GoTop($('.content'),$('.gotop'));
+
+	 </script>
+</body>
+</html>
