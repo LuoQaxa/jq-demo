@@ -4,8 +4,8 @@ jquery手写常见效果
 使用方法：`npm install server-mock` `server init` `server strat`
 
 - 新增几个常见组件
-[轮播]()
-[tab切换]()
-[曝光组件]()
-[对话框]()
-[日历组件]()
+[轮播](https://luoqaxa.github.io/jq-demo/%E7%BB%84%E4%BB%B6/carsouel.html)
+[tab切换](https://luoqaxa.github.io/jq-demo/%E7%BB%84%E4%BB%B6/tab.html)
+[曝光组件](https://luoqaxa.github.io/jq-demo/%E7%BB%84%E4%BB%B6/exposure.html)
+[对话框](https://luoqaxa.github.io/jq-demo/%E7%BB%84%E4%BB%B6/dialog.html)
+[日历组件](https://luoqaxa.github.io/jq-demo/%E7%BB%84%E4%BB%B6/date.html)
