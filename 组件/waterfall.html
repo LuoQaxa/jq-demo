@@ -104,7 +104,6 @@
 	  	        });
 	  	        //update colHeight
 	  	        this.colHeight[minInd] = $node.outerHeight(true) + this.colHeight[minInd];
-	  	        //设置this.$ct的高度,找出数组中的最大值，可以借用Math.max()方法
 	  	        this.$ct.height(Math.max.apply(null,this.colHeight));
 	  	    }
 	  	    Waterfall.prototype.getMinHeight = function(){
